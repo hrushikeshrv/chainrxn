@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Hrushikesh Vaidya | @hrushikeshrv">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon-64.png' %}">
+
+    {% block meta %}{% endblock %}
+    {% block stylesheet %}{% endblock %}
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    {% block libraries %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-
+    {% block body %}{% endblock %}
+    {% block javascript %}{% endblock %}
 </body>
 </html>
