@@ -4,13 +4,21 @@
 {% block title %}Play Chain Reaction Locally{% endblock %}
 
 {% block libraries %}
+    <script src="{% static 'js/core/player.js' %}"></script>
+    <script src="{% static 'js/core/particle.js' %}"></script>
     <script src="{% static 'js/core/chainreaction.js' %}"></script>
 {% endblock %}
 
 {% block body %}
     <div class="flexbox-row">
-        <div class="column-fourth full-height mobile-hide" id="game-settings-window"></div>
+        <div class="column-fourth full-height mobile-hide flexbox-column" id="game-settings-window">
+            {% include 'game-info.html' %}
+        </div>
         <div class="column-half full-height" id="game-window"></div>
         <div class="column-fourth full-height mobile-hide" id="game-info-window"></div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src={% static 'js/play.js' %}></script>
 {% endblock %}

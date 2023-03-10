@@ -426,3 +426,19 @@ a {
         display: inherit;
     }
 }
+
+
+/*
+    Grid styles
+*/
+
+.chainrxn-row {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.chainrxn-cell {
+    border: 2px solid red;
+    flex-grow: 1;
+}
