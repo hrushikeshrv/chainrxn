@@ -3,10 +3,10 @@ from django.views.generic import TemplateView
 
 from . import views
 
-app_name = 'core'
+app_name = "core"
 
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='core/homepage.html')),
-    path('local/', TemplateView.as_view(template_name='core/play_local.html'))
+    path("", TemplateView.as_view(template_name="core/homepage.html")),
+    path("local/", TemplateView.as_view(template_name="core/play_local.html")),
 ]
