@@ -51,9 +51,9 @@
     --warning-dark-4: rgb(77, 77, 3);
 
     --monospace-font: 'JetBrains Mono', monospace;
-    --decorative-font: 'Major Mono Display', cursive;
-    --paragraph-font: 'Mulish', Arial, sans-serif;
-    --heading-bold-font: 'Staatliches', Helvetica, sans-serif;
+    --decorative-font: 'JetBrains Mono', cursive;
+    --paragraph-font: 'Quicksand', Arial, sans-serif;
+    --heading-bold-font: 'Tilt Warp', Helvetica, sans-serif;
 
     --background-light-3: rgb(91, 91, 91);
     --background-light-2: rgb(72, 72, 72);
@@ -177,6 +177,37 @@ a {
     color: var(--default-font-color);
     text-decoration: none;
     border-bottom: 1px solid var(--primary-color);
+}
+
+h1 {
+    font-size: 3rem;
+    font-family: var(--heading-bold-font);
+}
+
+@media (max-width: 900px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+/*
+    Input styles
+*/
+
+input, button {
+    padding: 10px;
+    background-color: var(--background-dark-1);
+    font-family: var(--monospace-font);
+    box-shadow: none;
+    border: none;
+    color: var(--default-font-color);
+    margin-top: 10px;
 }
 
 /*
@@ -417,6 +448,10 @@ a {
     display: none;
 }
 
+.mobile-hide {
+    display: inherit;
+}
+
 @media (max-width: 600px) {
     .mobile-hide {
         display: none;
@@ -441,4 +476,15 @@ a {
 .chainrxn-cell {
     border: 2px solid red;
     flex-grow: 1;
+}
+
+.player-row {
+    font-size: 1.5rem;
+    font-family: var(--monospace-font);
+}
+
+.player-color {
+    width: 50px;
+    height: 30px;
+    margin-left: 30px;
 }
