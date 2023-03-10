@@ -25,4 +25,19 @@ export default class Game {
         if (Object.keys(particles).length  !== 1) return false;
         return Object.values(particles)[0] > 1;
     }
+
+    renderCell(particle) {
+        let particleElement = document.createElement('div')
+        if (!particle) particle.classList.add('chainrxn-particle-empty');
+        else particle.classList.add(`chainrxn-particle-${particle.atomicity}`);
+        return particleElement;
+    }
+
+    render() {
+        for (let row of this.grid) {
+            for (let cell of row) {
+
+            }
+        }
+    }
 }
