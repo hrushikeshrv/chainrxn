@@ -441,7 +441,7 @@ input, button {
 }
 
 .full-height {
-    height: 100vh;
+    height: 99.5vh;
 }
 
 .mobile-element {
@@ -487,4 +487,8 @@ input, button {
     width: 50px;
     height: 30px;
     margin-left: 30px;
+}
+
+#game-window {
+    border: 2px solid red;
 }
