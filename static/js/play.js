@@ -5,7 +5,6 @@ const startButton = document.querySelector('#start-game');
 
 
 let game = null;
-let gridCells = null;
 
 function createGame() {
     /*
@@ -27,7 +26,7 @@ function createGame() {
     }
     const players = [];
     for (let i = 0; i < nPlayers; i++) {
-        players.push(new Player(randomColor()));
+        players.push(new Player(randomColor(), i));
     }
 
     const width = document.querySelector('#width').value;
@@ -43,7 +42,6 @@ function createGame() {
     game = new Game(gameGrid, players, width, height);
     game.setupGrid();
     game.render();
-    gridCells = document.querySelectorAll('.chainrxn-cell');
 
     for (let i = 0; i < players.length; i++) {
         const player = players[i];
@@ -66,6 +64,14 @@ function createGame() {
         });
         gameInfo.appendChild(playerInfoRow);
     }
+
+    // Add click listeners to all cells to add particles
+    game.DOMcells.forEach(cell => {
+        cell.addEventListener('click', () => {
+            console.log('Clicked cell', cell.dataset.rowIndex, cell.dataset.columnIndex);
+            game.play(parseInt(cell.dataset.rowIndex), parseInt(cell.dataset.columnIndex));
+        })
+    })
 }
 
 startButton.addEventListener('click', createGame);

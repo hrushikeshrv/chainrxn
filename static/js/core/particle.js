@@ -4,4 +4,8 @@ class Particle {
         this.color = player.color;
         this.atomicity = 1;
     }
+
+    increaseAtomicity() {
+
+    }
 }

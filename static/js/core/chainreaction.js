@@ -1,5 +1,5 @@
 class Game {
-    constructor(window, players, width=6, height=9) {
+    constructor(window, players, width=7, height=9) {
         this.window = window;
         this.width = width;
         this.height = height;
@@ -21,6 +21,7 @@ class Game {
             for (let j = 0; j < this.width; j++) {
                 let cellElement = document.createElement('div');
                 cellElement.classList.add('chainrxn-cell', 'flexbox-row', 'ajc');
+                cellElement.style.width = Math.floor(this.window.offsetWidth / this.width).toString() + 'px';
                 cellElement.dataset.rowIndex = i.toString();
                 cellElement.dataset.columnIndex = j.toString();
                 rowElement.appendChild(cellElement);
@@ -44,14 +45,31 @@ class Game {
         return Object.values(particles)[0] > 1;
     }
 
+    getCurrentPlayer() {
+        /*
+        Returns the current player object
+         */
+        return this.players[this.turn];
+    }
+
     renderCell(particle) {
         /*
         Returns a DOM element that should be placed inside a .chainrxn-cell element
          */
         let particleElement = document.createElement('div')
-        if (!particle) particleElement.classList.add('chainrxn-particle-empty');
-        else particleElement.classList.add(`chainrxn-particle-${particle.atomicity}`);
-        particleElement.dataset.atomicity = particle ? particle.atomicity : 0;
+        if (!particle) {
+            particleElement.classList.add('chainrxn-particle-empty');
+        }
+        else {
+            particleElement.classList.add(
+                `chainrxn-particle-${particle.atomicity}`,
+                `chainrxn-particle-player-${particle.player.id}`
+            );
+            particleElement.dataset.atomicity = particle.atomicity;
+            particleElement.style.backgroundColor = particle.player.color;
+            particleElement.innerHTML = particle.atomicity;
+        }
+
         return particleElement;
     }
 
@@ -65,5 +83,38 @@ class Game {
                 this.DOMcells[index].appendChild(this.renderCell(this.grid[i][j]));
             }
         }
+    }
+
+    addParticle(row, col, player) {
+        /*
+        Adds a particle for the given player at the given row and
+        column on the grid
+         */
+        if (!this.grid[row][col]) {
+            this.grid[row][col] = new Particle(player);
+        }
+        else {
+            if (this.grid[row][col].player !== player) {
+                throw new Error(`Cell ${row}, ${col} already contains a different player's particle.`)
+            }
+            this.grid[row][col].increaseAtomicity();
+        }
+    }
+
+    propagate(row, col) {
+        /*
+        Propagates the chain reaction starting at the passed row and column
+         */
+    }
+
+    play(row, col) {
+        /*
+        Run the game loop given the current player added a particle at the passed
+        row and column
+         */
+        this.addParticle(row, col, this.players[this.turn]);
+        this.propagate(row, col);
+        this.render();
+        this.turn = (this.turn + 1) % this.players.length;
     }
 }
