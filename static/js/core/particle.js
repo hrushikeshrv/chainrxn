@@ -6,6 +6,6 @@ class Particle {
     }
 
     increaseAtomicity() {
-
+        this.atomicity++;
     }
 }

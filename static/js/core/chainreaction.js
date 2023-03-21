@@ -101,6 +101,10 @@ class Game {
         }
     }
 
+    getMaxAtomicity(row, col) {
+
+    }
+
     propagate(row, col) {
         /*
         Propagates the chain reaction starting at the passed row and column
@@ -112,9 +116,21 @@ class Game {
         Run the game loop given the current player added a particle at the passed
         row and column
          */
-        this.addParticle(row, col, this.players[this.turn]);
-        this.propagate(row, col);
-        this.render();
-        this.turn = (this.turn + 1) % this.players.length;
+        let played = false;
+        if (this.grid[row][col]) {
+            if (this.getCurrentPlayer() === this.grid[row][col].player) {
+                this.grid[row][col].increaseAtomicity();
+                played = true;
+            }
+        }
+        else {
+            this.addParticle(row, col, this.players[this.turn]);
+            played = true;
+        }
+        if (played) {
+            this.propagate(row, col);
+            this.render();
+            this.turn = (this.turn + 1) % this.players.length;
+        }
     }
 }

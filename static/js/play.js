@@ -68,7 +68,6 @@ function createGame() {
     // Add click listeners to all cells to add particles
     game.DOMcells.forEach(cell => {
         cell.addEventListener('click', () => {
-            console.log('Clicked cell', cell.dataset.rowIndex, cell.dataset.columnIndex);
             game.play(parseInt(cell.dataset.rowIndex), parseInt(cell.dataset.columnIndex));
         })
     })
