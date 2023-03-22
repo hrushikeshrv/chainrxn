@@ -131,6 +131,10 @@ class Game {
         }
     }
 
+    updateCellBorder() {
+        updateCellBorder(this.DOMcells, this.window, this.getCurrentPlayer().color);
+    }
+
     getMaxAtomicity(row, col) {
         if (row === 0 || row === this.height - 1) {
             if (col === 0 || col === this.width - 1) return 1;
@@ -166,6 +170,7 @@ class Game {
             this.propagate(row, col);
             this.render();
             this.turn = (this.turn + 1) % this.players.length;
+            this.updateCellBorder();
         }
     }
 }
