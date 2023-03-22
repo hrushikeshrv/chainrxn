@@ -2,7 +2,28 @@ function randomColor() {
     /*
     Returns a random hex color
      */
-    return '#' + Math.floor(Math.random()*16777215).toString(16);
+    let colors = [
+        '#FF2A2A',
+        '#FF672A',
+        '#FFA52A',
+        '#FFD52A',
+        '#EFFF2A',
+        '#A8FF2A',
+        '#67FF2A',
+        '#2AFF41',
+        '#2AFFAE',
+        '#2AFFE5',
+        '#2AEFFF',
+        '#2AB8FF',
+        '#2A74FF',
+        '#2A34FF',
+        '#742AFF',
+        '#B22AFF',
+        '#EF2AFF',
+        '#FF2AB2',
+        '#FF2A67'
+    ]
+    return colors[Math.floor(Math.random() * colors.length)];
 }
 
 function updateCellBorder(cells, window, color) {

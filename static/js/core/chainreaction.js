@@ -1,8 +1,8 @@
 class Game {
     constructor(window, players, width=7, height=9) {
         this.window = window;
-        this.width = width;
-        this.height = height;
+        this.width = width; // Number of cells per row
+        this.height = height; // Number of rows
         this.players = players;
         this.turn = 0;
         this.grid = []; // A 2D array storing the positions of the particles
@@ -50,6 +50,17 @@ class Game {
         Returns the current player object
          */
         return this.players[this.turn];
+    }
+
+    getCellNeighbours(row, col) {
+        let neighbours = [];
+        for (let delta of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+            if (row + delta[0] >= 0 && row + delta[0] < this.height) {
+                if (col + delta[1] >= 0 && col + delta[1] < this.width)
+                    neighbours.push([row + delta[0], col + delta[1]]);
+            }
+        }
+        return neighbours;
     }
 
     renderCell(particle) {
@@ -144,10 +155,21 @@ class Game {
         return 3;
     }
 
-    propagate(row, col) {
+    propagate(row, col, propagationSet=null) {
         /*
         Propagates the chain reaction starting at the passed row and column
          */
+        if (this.getMaxAtomicity(row, col) > this.grid[row][col].atomicity) return;
+        if (!propagationSet) propagationSet = new Set([[row, col]]);
+        let currentPlayer = this.getCurrentPlayer();
+
+        let neighbours = this.getCellNeighbours(row, col);
+        for (let n of neighbours) {
+            let [row, col] = [...n];
+            this.grid[row][col].player = currentPlayer;
+            this.grid[row][col].increaseAtomicity();
+            if (this.grid[row][col].atomicity > this.getMaxAtomicity(row, col)) propagationSet.add(n);
+        }
     }
 
     play(row, col) {

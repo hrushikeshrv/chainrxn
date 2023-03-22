@@ -490,7 +490,9 @@ input, button {
 }
 
 #game-window {
-    border: 2px solid red;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
 }
 
 .chainrxn-particle-empty,
