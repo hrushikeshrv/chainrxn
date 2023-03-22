@@ -143,7 +143,10 @@ class Game {
     }
 
     updateCellBorder() {
-        updateCellBorder(this.DOMcells, this.window, this.getCurrentPlayer().color);
+        for (let cell of this.DOMcells) {
+            cell.style.borderColor = this.getCurrentPlayer().color;
+        }
+        this.window.style.borderColor = this.getCurrentPlayer().color;
     }
 
     getMaxAtomicity(row, col) {
@@ -159,17 +162,17 @@ class Game {
         /*
         Propagates the chain reaction starting at the passed row and column
          */
-        if (this.getMaxAtomicity(row, col) > this.grid[row][col].atomicity) return;
+        if (this.getMaxAtomicity(row, col) >= this.grid[row][col].atomicity) return;
         if (!propagationSet) propagationSet = new Set([[row, col]]);
-        let currentPlayer = this.getCurrentPlayer();
+        // let currentPlayer = this.getCurrentPlayer();
 
-        let neighbours = this.getCellNeighbours(row, col);
-        for (let n of neighbours) {
-            let [row, col] = [...n];
-            this.grid[row][col].player = currentPlayer;
-            this.grid[row][col].increaseAtomicity();
-            if (this.grid[row][col].atomicity > this.getMaxAtomicity(row, col)) propagationSet.add(n);
-        }
+        // let neighbours = this.getCellNeighbours(row, col);
+        // for (let n of neighbours) {
+        //     let [row, col] = [...n];
+        //     this.grid[row][col].player = currentPlayer;
+        //     this.grid[row][col].increaseAtomicity();
+        //     if (this.grid[row][col].atomicity > this.getMaxAtomicity(row, col)) propagationSet.add(n);
+        // }
     }
 
     play(row, col) {
