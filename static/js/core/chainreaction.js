@@ -158,21 +158,34 @@ class Game {
         return 3;
     }
 
-    propagate(row, col, propagationSet=null) {
+    propagate(propagationSet) {
         /*
         Propagates the chain reaction starting at the passed row and column
          */
+        let _ = propagationSet.shift();
+        console.log('Propagating from', _);
+        let row = _[0];
+        let col = _[1];
         if (this.getMaxAtomicity(row, col) >= this.grid[row][col].atomicity) return;
-        if (!propagationSet) propagationSet = new Set([[row, col]]);
-        // let currentPlayer = this.getCurrentPlayer();
 
-        // let neighbours = this.getCellNeighbours(row, col);
-        // for (let n of neighbours) {
-        //     let [row, col] = [...n];
-        //     this.grid[row][col].player = currentPlayer;
-        //     this.grid[row][col].increaseAtomicity();
-        //     if (this.grid[row][col].atomicity > this.getMaxAtomicity(row, col)) propagationSet.add(n);
-        // }
+        this.grid[row][col] = null;
+        let neighbours = this.getCellNeighbours(row, col);
+        for (let n of neighbours) {
+            console.log('At neighbour ', n);
+            if (this.grid[n[0]][n[1]]) {
+                this.grid[n[0]][n[1]].player = this.getCurrentPlayer();
+                this.grid[n[0]][n[1]].increaseAtomicity();
+                console.log('Increased atomicity of ', n);
+                if (this.grid[n[0]][n[1]].atomicity > this.getMaxAtomicity(n[0], n[1]))
+                    propagationSet.push(n);
+                console.log('Propagation set is now', propagationSet);
+            }
+            else {
+                this.addParticle(n[0], n[1], this.getCurrentPlayer());
+            }
+        }
+
+        if (propagationSet.length > 0) this.propagate(propagationSet);
     }
 
     play(row, col) {
@@ -192,7 +205,7 @@ class Game {
             played = true;
         }
         if (played) {
-            this.propagate(row, col);
+            this.propagate([[row, col]]);
             this.render();
             this.turn = (this.turn + 1) % this.players.length;
             this.updateCellBorder();
