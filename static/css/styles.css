@@ -508,3 +508,24 @@ input, button {
     width: 100%;
     height: 100%;
 }
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+.chainrxn-particle-2 {
+    animation: rotate 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.chainrxn-particle-3 {
+    animation: rotate 1.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
