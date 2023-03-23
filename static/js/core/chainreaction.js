@@ -163,22 +163,21 @@ class Game {
         Propagates the chain reaction starting at the passed row and column
          */
         let _ = propagationSet.shift();
-        console.log('Propagating from', _);
         let row = _[0];
         let col = _[1];
-        if (this.getMaxAtomicity(row, col) >= this.grid[row][col].atomicity) return;
+        if (
+            !this.grid[row][col]
+            || this.getMaxAtomicity(row, col) >= this.grid[row][col].atomicity
+        ) return;
 
         this.grid[row][col] = null;
         let neighbours = this.getCellNeighbours(row, col);
         for (let n of neighbours) {
-            console.log('At neighbour ', n);
             if (this.grid[n[0]][n[1]]) {
                 this.grid[n[0]][n[1]].player = this.getCurrentPlayer();
                 this.grid[n[0]][n[1]].increaseAtomicity();
-                console.log('Increased atomicity of ', n);
                 if (this.grid[n[0]][n[1]].atomicity > this.getMaxAtomicity(n[0], n[1]))
                     propagationSet.push(n);
-                console.log('Propagation set is now', propagationSet);
             }
             else {
                 this.addParticle(n[0], n[1], this.getCurrentPlayer());
