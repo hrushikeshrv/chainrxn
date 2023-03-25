@@ -37,11 +37,3 @@ function changePlayerColor(player, playerRow, game) {
     game.updateCellBorder();
     game.render();
 }
-
-function printPropagationSet(p) {
-    let s = '';
-    for (let cell of p) {
-        s += '[' + p.toString() + '], ';
-    }
-    console.log(s);
-}

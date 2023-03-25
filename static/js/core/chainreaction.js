@@ -7,6 +7,7 @@ class Game {
         this.turn = 0;
         this.grid = []; // A 2D array storing the positions of the particles
         this.DOMcells = []; // An array storing the DOM elements of each individual cell in the grid
+        this.winner = null; // The winner of the game
 
         for (let i = 0; i < height; i++) {
             this.grid.push(new Array(width).fill(null));
@@ -42,7 +43,9 @@ class Game {
         }
 
         if (Object.keys(particles).length  !== 1) return false;
-        return Object.values(particles)[0] > 1;
+        if (Object.values(particles)[0] === 1) return false;
+        this.winner = Object.keys(particles)[0];
+        return true;
     }
 
     getCurrentPlayer() {
@@ -164,9 +167,7 @@ class Game {
         propagationSet.
          */
         while (propagationSet.length > 0) {
-            let _ = propagationSet.shift();
-            let row = _[0];
-            let col = _[1];
+            let [row, col] = [...propagationSet.shift()];
             if (
                 !this.grid[row][col]
                 || this.getMaxAtomicity(row, col) >= this.grid[row][col].atomicity

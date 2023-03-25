@@ -530,3 +530,33 @@ input, button {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
+
+.popup-window {
+    border-radius: 15px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    outline: 10000px solid rgba(0, 0, 0, 0.3);
+    z-index: 5;
+    background-color: var(--background-dark-2);
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+#game-over {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#winner-heading {
+    margin-right: 10px;
+    text-shadow: 0 0 2px black;
+    padding: 5px;
+}

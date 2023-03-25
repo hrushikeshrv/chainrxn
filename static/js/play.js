@@ -2,6 +2,7 @@ const gameSettings = document.querySelector('#game-settings-window');
 const gameGrid = document.querySelector('#game-window');
 const gameInfo = document.querySelector('#game-info-window');
 const startButton = document.querySelector('#start-game');
+const gameOverBanner = document.querySelector('#game-over');
 
 
 let game = null;
@@ -69,6 +70,12 @@ function createGame() {
     game.DOMcells.forEach(cell => {
         cell.addEventListener('click', () => {
             game.play(parseInt(cell.dataset.rowIndex), parseInt(cell.dataset.columnIndex));
+            if (game.isOver()) {
+                gameOverBanner.style.display = 'block';
+                const winnerHeading = gameOverBanner.querySelector('#winner-heading');
+                winnerHeading.textContent = game.winner;
+                winnerHeading.style.backgroundColor = game.winner;
+            }
         })
     })
 }
