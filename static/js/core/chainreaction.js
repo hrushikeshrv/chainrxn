@@ -160,31 +160,37 @@ class Game {
 
     propagate(propagationSet) {
         /*
-        Propagates the chain reaction starting at the passed row and column
+        Propagates the chain reaction for all the particle positions that are in the
+        propagationSet.
          */
-        let _ = propagationSet.shift();
-        let row = _[0];
-        let col = _[1];
-        if (
-            !this.grid[row][col]
-            || this.getMaxAtomicity(row, col) >= this.grid[row][col].atomicity
-        ) return;
+        while (propagationSet.length > 0) {
+            let _ = propagationSet.shift();
+            let row = _[0];
+            let col = _[1];
+            if (
+                !this.grid[row][col]
+                || this.getMaxAtomicity(row, col) >= this.grid[row][col].atomicity
+            ) continue;
 
-        this.grid[row][col] = null;
-        let neighbours = this.getCellNeighbours(row, col);
-        for (let n of neighbours) {
-            if (this.grid[n[0]][n[1]]) {
-                this.grid[n[0]][n[1]].player = this.getCurrentPlayer();
-                this.grid[n[0]][n[1]].increaseAtomicity();
-                if (this.grid[n[0]][n[1]].atomicity > this.getMaxAtomicity(n[0], n[1]))
-                    propagationSet.push(n);
+            if (this.grid[row][col] - this.getMaxAtomicity(row, col) > 0) {
+                this.grid[row][col].atomicity -= this.getMaxAtomicity(row, col);
             }
             else {
-                this.addParticle(n[0], n[1], this.getCurrentPlayer());
+                this.grid[row][col] = null;
+            }
+            let neighbours = this.getCellNeighbours(row, col);
+            for (let n of neighbours) {
+                if (this.grid[n[0]][n[1]]) {
+                    this.grid[n[0]][n[1]].player = this.getCurrentPlayer();
+                    this.grid[n[0]][n[1]].increaseAtomicity();
+                    if (this.grid[n[0]][n[1]].atomicity > this.getMaxAtomicity(n[0], n[1])) {
+                        propagationSet.push(n);
+                    }
+                } else {
+                    this.addParticle(n[0], n[1], this.getCurrentPlayer());
+                }
             }
         }
-
-        if (propagationSet.length > 0) this.propagate(propagationSet);
     }
 
     play(row, col) {
