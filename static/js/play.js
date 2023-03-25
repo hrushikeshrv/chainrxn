@@ -1,4 +1,3 @@
-const gameSettings = document.querySelector('#game-settings-window');
 const gameGrid = document.querySelector('#game-window');
 const gameInfo = document.querySelector('#game-info-window');
 const startButton = document.querySelector('#start-game');

@@ -523,12 +523,23 @@ input, button {
     animation: rotate 3s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
+    z-index: 3;
 }
 
 .chainrxn-particle-3 {
     animation: rotate 1.5s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
+    z-index: 3;
+}
+
+.chainrxn-particle-4,
+.chainrxn-particle-5,
+.chainrxn-particle-6 {
+    animation: rotate 0.7s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    z-index: 3;
 }
 
 .popup-window {
@@ -553,6 +564,7 @@ input, button {
     top: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
 
 #winner-heading {
