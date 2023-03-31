@@ -209,8 +209,10 @@ class Game {
         // Delay the next propagation by 0.3s for visual effect
         if (propagationSet.length > 0)
             setTimeout(() => {
-                this.propagate(propagationSet);
-            }, 300)
+                if (!this.isOver()) {
+                    this.propagate(propagationSet);
+                }
+            }, 300);
     }
 
     play(row, col) {
