@@ -165,6 +165,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -208,6 +209,18 @@ input, button {
     border: none;
     color: var(--default-font-color);
     margin-top: 10px;
+    transition: background-color ease 0.2s;
+    border-radius: 4px;
+}
+
+input:hover,
+button:hover {
+    background-color: var(--background-dark-2);
+}
+
+input:focus,
+button:focus {
+    outline: white solid 1px;
 }
 
 /*
@@ -571,4 +584,10 @@ input, button {
     margin-right: 10px;
     text-shadow: 0 0 2px black;
     padding: 5px;
+}
+
+.cta-or {
+    font-family: var(--monospace-font);
+    color: var(--muted-font);
+    font-size: 0.9rem;
 }

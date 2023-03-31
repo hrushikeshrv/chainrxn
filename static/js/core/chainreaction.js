@@ -203,7 +203,6 @@ class Game {
                     this.addParticle(n[0], n[1], this.getCurrentPlayer());
                 }
             }
-            console.log('Done exploding', row, col, '. Now rendering');
             this.render();
 
         }

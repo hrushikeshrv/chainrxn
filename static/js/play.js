@@ -2,6 +2,7 @@ const gameGrid = document.querySelector('#game-window');
 const gameInfo = document.querySelector('#game-info-window');
 const startButton = document.querySelector('#start-game');
 const gameOverBanner = document.querySelector('#game-over');
+const isSmallScreen = gameGrid.offsetWidth < 900;
 
 
 let game = null;
@@ -26,6 +27,10 @@ function createGame() {
     }
     const players = [];
     for (let i = 0; i < nPlayers; i++) {
+        let color = randomColor();
+        while (players.some(player => player.color === color)) {
+            color = randomColor();
+        }
         players.push(new Player(randomColor(), i));
     }
 
@@ -79,4 +84,9 @@ function createGame() {
     })
 }
 
-startButton.addEventListener('click', createGame);
+startButton.addEventListener('click', () => {
+    createGame();
+    if (isSmallScreen) {
+        gameGrid.scrollIntoView(true);
+    }
+});

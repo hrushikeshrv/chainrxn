@@ -4,7 +4,40 @@
 {% block title  %}Play Chain Reaction{% endblock %}
 
 {% block body %}
-    <h1>Work in progress</h1>
-    <a href="{% url 'core:play_local' %}">Play locally</a>
-    <a href="{% url 'core:play_local' %}">Play with others</a>
+    <div class="pad-30 flexbox-column">
+        <h1 class="flexbox-row ajc">
+            <span>Play Chain Reaction</span>
+            <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="33" height="33" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2AB8FF" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <line x1="12" y1="12" x2="12" y2="12.01" />
+                      <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(45 12 12)" />
+                      <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)" />
+                    </svg>
+            </span>
+        </h1>
+        <div class="flexbox-column ajc">
+            <div class="flexbox-column">
+                <div class="flexbox-column pad-30">
+                    <label for="lobby-name">Lobby name:</label>
+                    <input type="text" id="lobby-name">
+                    <button class="pad-10" id="join-lobby">Join Lobby</button>
+                </div>
+                <span class="flexbox-row ajc cta-or">OR</span>
+                <div class="flexbox-column pad-10">
+                    <button class="pad-10" id="create-new-lobby">Create New Lobby</button>
+                </div>
+                <span class="flexbox-row ajc cta-or mt-10">OR</span>
+                <div class="flexbox-column pad-10 ajc">
+                    <a class="pad-10" href="{% url 'core:play_local' %}">Play locally</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/lobby_manager.js' %}"></script>
 {% endblock %}

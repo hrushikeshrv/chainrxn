@@ -2,6 +2,12 @@
     <h1>Chain Reaction</h1>
 </div>
 
+{% if lobby_code %}
+<div class="pad-30 flexbox-column">
+    <h1>{{ lobby_code }}</h1>
+</div>
+{% endif %}
+
 <div class="pad-30 flexbox-column">
     <label for="n-players">How many people are playing?</label>
     <input type="number" name="n-players" id="n-players" value="2">
