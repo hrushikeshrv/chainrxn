@@ -21,16 +21,12 @@
                 <div class="flexbox-column pad-30">
                     <label for="lobby-name">Lobby name:</label>
                     <input type="text" id="lobby-name">
-                    <button class="pad-10" id="join-lobby">Join Lobby</button>
+                    <button class="pad-10 mt-20" id="join-lobby">Join Game</button>
                 </div>
-                <span class="flexbox-row ajc cta-or">OR</span>
-                <div class="flexbox-column pad-10">
-                    <button class="pad-10" id="create-new-lobby">Create New Lobby</button>
-                </div>
-                <span class="flexbox-row ajc cta-or mt-10">OR</span>
-                <div class="flexbox-column pad-10 ajc">
-                    <a class="pad-10" href="{% url 'core:play_local' %}">Play locally</a>
-                </div>
+            </div>
+            <span class="flexbox-row ajc cta-or mt-10">OR</span>
+            <div class="flexbox-column pad-10 ajc">
+                <a class="pad-10" href="{% url 'core:play_local' %}">Play locally</a>
             </div>
         </div>
     </div>
