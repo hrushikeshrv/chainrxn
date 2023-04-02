@@ -203,15 +203,14 @@ class Game {
                     this.addParticle(n[0], n[1], this.getCurrentPlayer());
                 }
             }
-            console.log('Done exploding', row, col, '. Now rendering');
             this.render();
 
         }
-        // Delay the next propagation by 0.3s for visual effect
+        // Delay the next propagation by 0.35s for visual effect
         if (propagationSet.length > 0)
             setTimeout(() => {
                 this.propagate(propagationSet);
-            }, 300)
+            }, 350);
     }
 
     play(row, col) {
