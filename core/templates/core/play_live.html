@@ -6,3 +6,25 @@
 {% block body %}
 
 {% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/websocket_handlers.js' %}"></script>
+    <script>
+        const playerName = "{{ player_name }}";
+        const lobbyName = "{{ lobby_name }}";
+
+        const socket = new WebSocket(
+            'ws://'
+            + document.location.hostname
+            + '/ws/game/'
+            + lobbyName
+            + '/'
+        );
+
+        socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            handleData(data);
+        }
+    </script>
+    <script src="{% static 'js/play_live.js' %}"></script>
+{% endblock %}
