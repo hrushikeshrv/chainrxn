@@ -1,4 +1,5 @@
 const lobbyNameInput = document.querySelector('#lobby-name');
+const playerNameInput = document.querySelector('#player-name');
 const joinLobbyButton = document.querySelector('#join-lobby');
 
 lobbyNameInput.onkeyup = function(e) {
