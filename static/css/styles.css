@@ -218,6 +218,11 @@ button:hover {
     background-color: var(--background-dark-2);
 }
 
+input:active,
+button:active {
+    background-color: var(--background-dark-3);
+}
+
 input:focus,
 button:focus {
     outline: white solid 1px;

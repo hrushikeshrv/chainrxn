@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "daphne",
-
     "users",
     "core",
     "django.contrib.admin",
@@ -73,6 +72,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "chainrxn.wsgi.application"
+ASGI_APPLICATION = "chainrxn.asgi.application"
 
 
 # Database

@@ -18,19 +18,18 @@
         </h1>
         <div class="flexbox-column ajc">
             <div class="flexbox-column">
-                <div class="flexbox-column pad-30">
+                <form class="flexbox-column pad-30" method="POST" action="{% url 'core:play_live' %}">
+                    {% csrf_token %}
                     <label for="lobby-name">Lobby name:</label>
-                    <input type="text" id="lobby-name">
-                    <button class="pad-10" id="join-lobby">Join Lobby</button>
-                </div>
-                <span class="flexbox-row ajc cta-or">OR</span>
-                <div class="flexbox-column pad-10">
-                    <button class="pad-10" id="create-new-lobby">Create New Lobby</button>
-                </div>
-                <span class="flexbox-row ajc cta-or mt-10">OR</span>
-                <div class="flexbox-column pad-10 ajc">
-                    <a class="pad-10" href="{% url 'core:play_local' %}">Play locally</a>
-                </div>
+                    <input type="text" name="lobby_name" id="lobby-name" required>
+                    <label for="player-name" class="mt-10">Your name:</label>
+                    <input type="text" id="player-name" name="player_name" required>
+                    <button class="pad-10 mt-20" id="join-lobby">Join Game</button>
+                </form>
+            </div>
+            <span class="flexbox-row ajc cta-or mt-10">OR</span>
+            <div class="flexbox-column pad-10 ajc">
+                <a class="pad-10" href="{% url 'core:play_local' %}">Play locally</a>
             </div>
         </div>
     </div>
