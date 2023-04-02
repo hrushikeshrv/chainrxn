@@ -13,7 +13,7 @@
 {% block body %}
     {% include 'game-over.html' %}
     <div class="flexbox-row">
-        <div class="column-fourth full-height mobile-hide flexbox-column" id="game-settings-window">
+        <div class="column-fourth full-height flexbox-column" id="game-settings-window">
             {% include 'game-info.html' %}
         </div>
         <div class="column-half full-height" id="game-window">
@@ -21,7 +21,11 @@
                 Click Start Game to start the game
             </div>
         </div>
-        <div class="column-fourth full-height mobile-hide flexbox-column" id="game-info-window"></div>
+        <div class="column-fourth full-height flexbox-column" id="game-info-window">
+            <div class="pad-30">
+                <h1>Players</h1>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
