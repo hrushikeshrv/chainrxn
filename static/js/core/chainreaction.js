@@ -175,7 +175,7 @@ class Game {
         return 3;
     }
 
-    propagate(propagationSet) {
+    propagate(propagationSet, player) {
         /*
         Propagates the chain reaction for all the particle positions that are in the
         propagationSet.
@@ -194,13 +194,13 @@ class Game {
             let neighbours = this.getCellNeighbours(row, col);
             for (let n of neighbours) {
                 if (this.grid[n[0]][n[1]]) {
-                    this.grid[n[0]][n[1]].player = this.getCurrentPlayer();
+                    this.grid[n[0]][n[1]].player = player;
                     this.grid[n[0]][n[1]].increaseAtomicity();
                     if (this.grid[n[0]][n[1]].atomicity > this.getMaxAtomicity(n[0], n[1])) {
                         propagationSet.push(n);
                     }
                 } else {
-                    this.addParticle(n[0], n[1], this.getCurrentPlayer());
+                    this.addParticle(n[0], n[1], player);
                 }
             }
             this.render();
@@ -210,7 +210,7 @@ class Game {
         if (propagationSet.length > 0)
             setTimeout(() => {
                 if (!this.isOver()) {
-                    this.propagate(propagationSet);
+                    this.propagate(propagationSet, player);
                 }
             }, 300);
     }
@@ -220,6 +220,7 @@ class Game {
         Run the game loop given the current player added a particle at the passed
         row and column
          */
+        if (this.isOver()) return;
         let played = false;
         if (this.grid[row][col]) {
             if (this.getCurrentPlayer() === this.grid[row][col].player) {
@@ -232,7 +233,7 @@ class Game {
             played = true;
         }
         if (played) {
-            this.propagate([[row, col]]);
+            this.propagate([[row, col]], this.getCurrentPlayer());
             this.render();
             this.turn = (this.turn + 1) % this.players.length;
             this.updateCellBorder();
