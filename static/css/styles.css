@@ -596,3 +596,8 @@ button:focus {
     color: var(--muted-font);
     font-size: 0.9rem;
 }
+
+#game-info-window {
+    overflow-y: auto;
+    flex-direction: row;
+}
