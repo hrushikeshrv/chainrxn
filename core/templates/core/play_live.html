@@ -20,11 +20,6 @@
             + lobbyName
             + '/'
         );
-
-        socket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            handleData(data);
-        }
     </script>
     <script src="{% static 'js/play_live.js' %}"></script>
 {% endblock %}
