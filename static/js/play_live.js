@@ -12,12 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
         action: 'player-joined',
         playerName: playerName,
     }
-    socket.send(JSON.stringify(data));
+    console.log('Sending data');
+    socket.onopen = () => socket.send(JSON.stringify(data));
 })
 
 socket.onmessage = function(e) {
     const data = JSON.parse(e.data);
-    handleData(data);
+    console.log(data);
 }
 
 function addPlayerToGame(playerName) {

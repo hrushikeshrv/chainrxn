@@ -4,18 +4,32 @@
 {% block title %}{{ lobby_name }} - Play Chain Reaction with Friends{% endblock %}
 
 {% block body %}
-
+    {% include 'game-over.html' %}
+    <div class="flexbox-row">
+        <div class="column-fourth full-height flexbox-column" id="game-settings-window">
+            {% include 'game-info.html' %}
+        </div>
+        <div class="column-half full-height" id="game-window">
+            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--heading-bold-font); font-size: 2rem; text-align: center;">
+                Click Start Game to start the game
+            </div>
+        </div>
+        <div class="column-fourth full-height flexbox-column" id="game-info-window">
+            <div class="pad-30">
+                <h1>Players</h1>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
-    <script src="{% static 'js/websocket_handlers.js' %}"></script>
     <script>
         const playerName = "{{ player_name }}";
         const lobbyName = "{{ lobby_name }}";
 
         const socket = new WebSocket(
             'ws://'
-            + document.location.hostname
+            + document.location.host
             + '/ws/game/'
             + lobbyName
             + '/'
