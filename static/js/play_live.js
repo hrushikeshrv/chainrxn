@@ -6,17 +6,21 @@ const isSmallScreen = gameGrid.offsetWidth < 900;
 
 let maxID = 0;
 let game = new Game(gameGrid, [], 7, 9);
+let localPlayer;
 
 game.DOMcells.forEach(cell => {
     cell.addEventListener('click', () => {
         // ! First check if it is this player's turn, if not, return.
+        if (game.getCurrentPlayer() !== localPlayer) return;
         game.play(parseInt(cell.dataset.rowIndex), parseInt(cell.dataset.columnIndex));
+
         if (game.isOver()) {
             gameOverBanner.style.display = 'block';
             const winnerHeading = gameOverBanner.querySelector('#winner-heading');
             winnerHeading.textContent = game.winner;
             winnerHeading.style.backgroundColor = game.winner;
         }
+
         const data = {
             action: 'cell-clicked',
             row: parseInt(cell.dataset.rowIndex),
@@ -41,6 +45,7 @@ socket.onmessage = function(e) {
 
 function addPlayerToGame(playerName) {
     const player = new Player(randomColor(), maxID++);
+    if (game.players.length === 0) localPlayer = player;
     game.players.push(player);
     const playerRow = document.createElement('div');
     playerRow.classList.add('player-row', 'flexbox-row', 'pad-30');
@@ -65,5 +70,6 @@ function addPlayerToGame(playerName) {
 function handleData(data) {
     if (data.action === 'player-joined') {
         addPlayerToGame(data.playerName);
+        // Send a websocket message saying I don't know who the leader is.
     }
 }

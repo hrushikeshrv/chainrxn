@@ -3,6 +3,13 @@
 
 {% block title %}{{ lobby_name }} - Play Chain Reaction with Friends{% endblock %}
 
+{% block libraries %}
+    <script src="{% static 'js/core/player.js' %}"></script>
+    <script src={% static 'js/utils.js' %}></script>
+    <script src="{% static 'js/core/particle.js' %}"></script>
+    <script src="{% static 'js/core/chainreaction.js' %}"></script>
+{% endblock %}
+
 {% block body %}
     {% include 'game-over.html' %}
     <div class="flexbox-row">
@@ -14,10 +21,8 @@
                 Click Start Game to start the game
             </div>
         </div>
-        <div class="column-fourth full-height flexbox-column" id="game-info-window">
-            <div class="pad-30">
-                <h1>Players</h1>
-            </div>
+        <div class="column-fourth full-height" id="game-info-window">
+            <h1 class="pad-30">Players</h1>
         </div>
     </div>
 {% endblock %}

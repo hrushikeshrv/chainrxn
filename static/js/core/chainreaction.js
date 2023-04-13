@@ -8,6 +8,7 @@ class Game {
         this.grid = []; // A 2D array storing the positions of the particles
         this.DOMcells = []; // An array storing the DOM elements of each individual cell in the grid
         this.winner = null; // The winner of the game
+        this.lobbyLeader = null; // The leader of the lobby, who starts the game
 
         for (let i = 0; i < height; i++) {
             this.grid.push(new Array(width).fill(null));
