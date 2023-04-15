@@ -7,6 +7,7 @@ const isSmallScreen = gameGrid.offsetWidth < 900;
 let maxID = 0;
 let game = new Game(gameGrid, [], 7, 9);
 let localPlayer;
+let gameLeader = null;
 
 game.DOMcells.forEach(cell => {
     cell.addEventListener('click', () => {
@@ -31,6 +32,10 @@ game.DOMcells.forEach(cell => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#game-info-container').style.display = 'none';
+    document.querySelector('#game-settings-window').innerHTML += `
+        <h2 class="pad-30" id="waiting-message">Waiting for the leader to start the game</h2>
+    `;
     const data = {
         action: 'player-joined',
         playerName: playerName,
@@ -40,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 socket.onmessage = function(e) {
     const data = JSON.parse(e.data);
+    console.log(data);
     handleData(data);
 }
 
@@ -71,5 +77,22 @@ function handleData(data) {
     if (data.action === 'player-joined') {
         addPlayerToGame(data.playerName);
         // Send a websocket message saying I don't know who the leader is.
+        if (!gameLeader) {
+            const data = {
+                action: "leader-election",
+                sender: playerName,
+                leader: gameLeader
+            }
+            socket.send(JSON.stringify(data));
+        }
+    }
+
+    if (data.action === 'leader-election') {
+        if (data.leader === null && gameLeader === null) {
+            gameLeader = localPlayer;
+            document.querySelector('#game-info-container').removeAttribute('style');
+            document.querySelector('#waiting-message').remove();
+        }
+        else gameLeader = data.leader;
     }
 }
