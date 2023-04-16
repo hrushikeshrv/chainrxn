@@ -77,22 +77,26 @@ function handleData(data) {
     if (data.action === 'player-joined') {
         addPlayerToGame(data.playerName);
         // Send a websocket message saying I don't know who the leader is.
-        if (!gameLeader) {
-            const data = {
-                action: "leader-election",
-                sender: playerName,
-                leader: gameLeader
-            }
-            socket.send(JSON.stringify(data));
+        const message = {
+            action: "leader-election",
+            sender: playerName,
+            leader: gameLeader
         }
+        console.log('New player joined, sending leader info', message);
+        socket.send(JSON.stringify(message));
     }
 
     if (data.action === 'leader-election') {
+        console.log('Received leader message. Leader is currently', gameLeader);
         if (data.leader === null && gameLeader === null) {
             gameLeader = localPlayer;
+            console.log('Setting game leader to self');
             document.querySelector('#game-info-container').removeAttribute('style');
             document.querySelector('#waiting-message').remove();
         }
-        else gameLeader = data.leader;
+        else if (!gameLeader) {
+            gameLeader = data.leader;
+            console.log('Setting game leader to ', data.leader);
+        }
     }
 }
