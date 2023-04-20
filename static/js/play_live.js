@@ -1,6 +1,6 @@
 const gameGrid = document.querySelector('#game-window');
 const gameInfo = document.querySelector('#game-info-window');
-const startButton = document.querySelector('#start-game');
+const startButton = document.querySelector('button#start-game');
 const gameOverBanner = document.querySelector('#game-over');
 const isSmallScreen = gameGrid.offsetWidth < 900;
 
@@ -29,6 +29,26 @@ game.DOMcells.forEach(cell => {
         }
         socket.send(JSON.stringify(data));
     })
+})
+
+startButton.addEventListener('click', () => {
+    console.log('Starting game');
+    const width = document.querySelector('#width').value
+    const height = document.querySelector('#height').value;
+   if (width > 15 || width < 5) {
+       alert('Number of cells per row must be between 5 and 15');
+       return;
+   }
+   if (height > 15 || height < 5) {
+       alert('Number of rows must be between 5 and 15');
+       return;
+   }
+    const data = {
+        action: 'start-game',
+        height: height,
+        width: width
+    }
+    socket.send(JSON.stringify(data));
 })
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -81,27 +101,32 @@ function handleData(data) {
             sender: playerName,
             leader: gameLeader
         }
-        console.log('New player joined, sending leader info', message);
         socket.send(JSON.stringify(message));
     }
 
     if (data.action === 'leader-election') {
-        console.log('Received leader message. Leader is currently', gameLeader);
         if (data.leader === null && gameLeader === null) {
             gameLeader = localPlayer;
-            console.log('Setting game leader to self');
             document.querySelector('#game-info-container').removeAttribute('style');
             document.querySelector('#waiting-message').remove();
         }
         else if (!gameLeader) {
             gameLeader = data.leader;
-            console.log('Setting game leader to ', data.leader);
         }
         let playerAdded = false;
         for (let p of game.players) {
-            console.log(p.name);
             if (p.name === data.sender) playerAdded = true;
         }
         if (!playerAdded) addPlayerToGame(data.sender);
+    }
+
+    if (data.action === 'start-game') {
+        const newGame = new Game(gameGrid, [], parseInt(data.width), parseInt(data.height));
+        for (let p of game.players) newGame.players.push(p);
+        gameGrid.innerHTML = '';
+        game = newGame;
+        game.setupGrid();
+        game.render();
+        if (isSmallScreen) gameGrid.scrollIntoView(true);
     }
 }
