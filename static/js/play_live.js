@@ -49,7 +49,7 @@ socket.onmessage = function(e) {
 }
 
 function addPlayerToGame(playerName) {
-    const player = new Player(randomColor(), maxID++);
+    const player = new Player(randomColor(), maxID++, playerName);
     if (game.players.length === 0) localPlayer = player;
     game.players.push(player);
     const playerRow = document.createElement('div');
@@ -97,5 +97,11 @@ function handleData(data) {
             gameLeader = data.leader;
             console.log('Setting game leader to ', data.leader);
         }
+        let playerAdded = false;
+        for (let p of game.players) {
+            console.log(p.name);
+            if (p.name === data.sender) playerAdded = true;
+        }
+        if (!playerAdded) addPlayerToGame(data.sender);
     }
 }
