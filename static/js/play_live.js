@@ -1,6 +1,6 @@
 const gameGrid = document.querySelector('#game-window');
 const gameInfo = document.querySelector('#game-info-window');
-const startButton = document.querySelector('button#start-game');
+const startButton = document.querySelector('#start-game');
 const gameOverBanner = document.querySelector('#game-over');
 const isSmallScreen = gameGrid.offsetWidth < 900;
 
@@ -31,26 +31,6 @@ game.DOMcells.forEach(cell => {
     })
 })
 
-startButton.addEventListener('click', () => {
-    console.log('Starting game');
-    const width = document.querySelector('#width').value
-    const height = document.querySelector('#height').value;
-   if (width > 15 || width < 5) {
-       alert('Number of cells per row must be between 5 and 15');
-       return;
-   }
-   if (height > 15 || height < 5) {
-       alert('Number of rows must be between 5 and 15');
-       return;
-   }
-    const data = {
-        action: 'start-game',
-        height: height,
-        width: width
-    }
-    socket.send(JSON.stringify(data));
-})
-
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#game-info-container').style.display = 'none';
     document.querySelector('#game-settings-window').innerHTML += `
@@ -61,6 +41,26 @@ document.addEventListener('DOMContentLoaded', () => {
         playerName: playerName,
     }
     socket.onopen = () => socket.send(JSON.stringify(data));
+})
+
+startButton.addEventListener('click', () => {
+    console.log('Starting game');
+    const width = document.querySelector('#width').value
+    const height = document.querySelector('#height').value;
+    if (width > 15 || width < 5) {
+        alert('Number of cells per row must be between 5 and 15');
+        return;
+    }
+    if (height > 15 || height < 5) {
+        alert('Number of rows must be between 5 and 15');
+        return;
+    }
+    const data = {
+        action: 'start-game',
+        height: height,
+        width: width
+    }
+    socket.send(JSON.stringify(data));
 })
 
 socket.onmessage = function(e) {
