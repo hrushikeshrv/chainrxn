@@ -35,36 +35,20 @@ game.DOMcells.forEach(cell => {
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#game-info-container').style.display = 'none';
     document.querySelector('#game-settings-window').innerHTML += `
+        <div id="waiting-message">
         <h1 class="pad-30">Chain Reaction</h1>
         <h2 class="pad-30" id="waiting-message">
             <span style="margin-right: 10px;">Waiting for the game leader to start the game</span>
             <span class="donutSpinner smallSpinner"></span>
         </h2>
+        </div>
     `;
 
     // ! Select the start button and add the event listener here
     // The script can't select the start button properly before
     // DOM content is loaded for some reason.
     startButton = document.querySelector('#start-game');
-    startButton.addEventListener('click', () => {
-        console.log('Starting game');
-        const width = document.querySelector('#width').value
-        const height = document.querySelector('#height').value;
-        if (width > 15 || width < 5) {
-            alert('Number of cells per row must be between 5 and 15');
-            return;
-        }
-        if (height > 15 || height < 5) {
-            alert('Number of rows must be between 5 and 15');
-            return;
-        }
-        const data = {
-            action: 'start-game',
-            height: height,
-            width: width
-        }
-        socket.send(JSON.stringify(data));
-    })
+    startButton.addEventListener('click', startGame);
     const data = {
         action: 'player-joined',
         playerName: playerName,
@@ -77,6 +61,26 @@ document.addEventListener('DOMContentLoaded', () => {
 socket.onmessage = function(e) {
     const data = JSON.parse(e.data);
     handleData(data);
+}
+
+function startGame() {
+    console.log('Starting game');
+    const width = document.querySelector('#width').value
+    const height = document.querySelector('#height').value;
+    if (width > 15 || width < 5) {
+        alert('Number of cells per row must be between 5 and 15');
+        return;
+    }
+    if (height > 15 || height < 5) {
+        alert('Number of rows must be between 5 and 15');
+        return;
+    }
+    const data = {
+        action: 'start-game',
+        height: height,
+        width: width
+    }
+    socket.send(JSON.stringify(data));
 }
 
 function addPlayerToGame(playerName) {
