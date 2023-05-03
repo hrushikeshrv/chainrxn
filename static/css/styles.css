@@ -88,6 +88,12 @@
     color: black;
 }
 
+@keyframes donut-spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
 .donutSpinner {
     display: inline-block;
     border-radius: 50%;
