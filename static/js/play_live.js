@@ -10,27 +10,7 @@ let game = new Game(gameGrid, [], 7, 9);
 let localPlayer;
 let gameLeader = null;
 
-game.DOMcells.forEach(cell => {
-    cell.addEventListener('click', () => {
-        // ! First check if it is this player's turn, if not, return.
-        if (game.getCurrentPlayer() !== localPlayer) return;
-        game.play(parseInt(cell.dataset.rowIndex), parseInt(cell.dataset.columnIndex));
 
-        if (game.isOver()) {
-            gameOverBanner.style.display = 'block';
-            const winnerHeading = gameOverBanner.querySelector('#winner-heading');
-            winnerHeading.textContent = game.winner;
-            winnerHeading.style.backgroundColor = game.winner;
-        }
-
-        const data = {
-            action: 'cell-clicked',
-            row: parseInt(cell.dataset.rowIndex),
-            col: parseInt(cell.dataset.columnIndex),
-        }
-        socket.send(JSON.stringify(data));
-    })
-})
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#game-info-container').style.display = 'none';
@@ -81,6 +61,30 @@ function startGame() {
         width: width
     }
     socket.send(JSON.stringify(data));
+}
+
+function addClickEventListeners() {
+    game.DOMcells.forEach(cell => {
+        cell.addEventListener('click', () => {
+            // ! First check if it is this player's turn, if not, return.
+            if (game.getCurrentPlayer() !== localPlayer) return;
+            game.play(parseInt(cell.dataset.rowIndex), parseInt(cell.dataset.columnIndex));
+
+            if (game.isOver()) {
+                gameOverBanner.style.display = 'block';
+                const winnerHeading = gameOverBanner.querySelector('#winner-heading');
+                winnerHeading.textContent = game.winner;
+                winnerHeading.style.backgroundColor = game.winner;
+            }
+
+            const data = {
+                action: 'cell-clicked',
+                row: parseInt(cell.dataset.rowIndex),
+                col: parseInt(cell.dataset.columnIndex),
+            }
+            socket.send(JSON.stringify(data));
+        })
+    })
 }
 
 function addPlayerToGame(playerName) {
@@ -143,5 +147,11 @@ function handleData(data) {
         game.setupGrid();
         game.render();
         if (isSmallScreen) gameGrid.scrollIntoView(true);
+        document.querySelector('#waiting-message')?.remove();
+        addClickEventListeners();
+    }
+
+    if (data.action === 'cell-clicked') {
+        game.play(data.row, data.col);
     }
 }
