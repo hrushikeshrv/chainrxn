@@ -118,9 +118,19 @@ function handleData(data) {
         const message = {
             action: "leader-election",
             sender: playerName,
-            leader: gameLeader
+            leader: gameLeader,
         }
         socket.send(JSON.stringify(message));
+        if (gameLeader === localPlayer) {
+            console.log('New player joined, communicated player order as leader');
+            const players = [];
+            for (let p of game.players) players.push(p.name);
+            const message = {
+                action: "player-order-sync",
+                players: players
+            }
+            socket.send(JSON.stringify(message));
+        }
     }
 
     if (data.action === 'leader-election') {
@@ -152,6 +162,20 @@ function handleData(data) {
     }
 
     if (data.action === 'cell-clicked') {
+
         game.play(data.row, data.col);
+    }
+
+    if (data.action === 'player-order-sync') {
+        if (gameLeader === localPlayer) return;
+        console.log('Player order before sync -', game.players);
+        const newPlayers = [];
+        for (let name of data.players) {
+            for (let p of game.players) {
+                if (p.name === name) newPlayers.push(p);
+            }
+        }
+        game.players = newPlayers;
+        console.log('Player order after sync -', game.players);
     }
 }
