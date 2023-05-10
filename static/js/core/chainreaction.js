@@ -34,18 +34,20 @@ class Game {
     }
 
     isOver() {
+        let winnerName;
         let particles = {};
         for (let row of this.grid) {
             for (let cell of row) {
                 if (cell instanceof Particle) {
                     particles[cell.player.color] = (particles[cell.player.color] || 0) + 1;
+                    winnerName = cell.player.name;
                 }
             }
         }
 
         if (Object.keys(particles).length  !== 1) return false;
         if (Object.values(particles)[0] === 1) return false;
-        this.winner = Object.keys(particles)[0];
+        this.winner = winnerName || Object.keys(particles)[0];
         return true;
     }
 

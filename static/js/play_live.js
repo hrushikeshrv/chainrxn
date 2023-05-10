@@ -67,8 +67,6 @@ function addClickEventListeners() {
     game.DOMcells.forEach(cell => {
         cell.addEventListener('click', () => {
             // ! First check if it is this player's turn, if not, return.
-            if (game.getCurrentPlayer() !== localPlayer) return;
-            game.play(parseInt(cell.dataset.rowIndex), parseInt(cell.dataset.columnIndex));
 
             if (game.isOver()) {
                 gameOverBanner.style.display = 'block';
@@ -76,6 +74,8 @@ function addClickEventListeners() {
                 winnerHeading.textContent = game.winner;
                 winnerHeading.style.backgroundColor = game.winner;
             }
+
+            if (game.getCurrentPlayer() !== localPlayer) return;
 
             const data = {
                 action: 'cell-clicked',
@@ -162,13 +162,11 @@ function handleData(data) {
     }
 
     if (data.action === 'cell-clicked') {
-
         game.play(data.row, data.col);
     }
 
     if (data.action === 'player-order-sync') {
         if (gameLeader === localPlayer) return;
-        console.log('Player order before sync -', game.players);
         const newPlayers = [];
         for (let name of data.players) {
             for (let p of game.players) {
@@ -176,6 +174,5 @@ function handleData(data) {
             }
         }
         game.players = newPlayers;
-        console.log('Player order after sync -', game.players);
     }
 }
